@@ -4,6 +4,8 @@ Spotify on your keys. Global keyboard shortcuts for the Spotify web player (open
 Chrome, plus a small now-playing popup with a clickable queue. Runs as a tray icon and works no matter
 which window has focus, so you never have to switch to the browser to skip, pause or check a song.
 
+![Spotikey now-playing popup with the queue](docs/poc.png)
+
 | Action                          | Default hotkey     | Needs extension |
 |---------------------------------|--------------------|-----------------|
 | Next track                      | Ctrl+Alt+Right     | no              |
