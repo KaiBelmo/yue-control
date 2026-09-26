@@ -164,8 +164,8 @@ public sealed class TrayApp : ApplicationContext
         AddBinding(menu, "Show now playing + queue", _cfg.NowPlaying);
         AddBinding(menu, "Shuffle (extension)", _cfg.Shuffle);
         AddBinding(menu, "Like song (extension)", _cfg.Like);
-        AddBinding(menu, "Spotify volume up (extension)", _cfg.VolumeUp);
-        AddBinding(menu, "Spotify volume down (extension)", _cfg.VolumeDown);
+        AddBinding(menu, "Volume up (extension)", _cfg.VolumeUp);
+        AddBinding(menu, "Volume down (extension)", _cfg.VolumeDown);
         AddBinding(menu, "Repeat mode (extension)", _cfg.Repeat);
         menu.Items.Add(new ToolStripSeparator());
 
@@ -352,12 +352,13 @@ public sealed class TrayApp : ApplicationContext
         try { Process.Start(new ProcessStartInfo("explorer.exe", $"\"{ExtensionDir}\"") { UseShellExecute = true }); } catch { }
 
         MessageBox.Show(
-            "The Chrome extension adds: queue in the popup, shuffle, like, Spotify volume and repeat hotkeys.\n\n" +
+            "The Chrome extension adds: queue in the popup, shuffle, like, volume and repeat hotkeys for\n" +
+            "Spotify and YouTube Music.\n\n" +
             "1. In Chrome, open  chrome://extensions\n" +
             "2. Turn on \"Developer mode\" (top right)\n" +
             "3. Click \"Load unpacked\" and choose this folder (path is on your clipboard):\n" +
             $"    {ExtensionDir}\n" +
-            "4. Reload the open.spotify.com tab\n\n" +
+            "4. Reload your open.spotify.com / music.youtube.com tabs\n\n" +
             "The tray menu then shows \"Chrome extension: connected\".\n" +
             "Chrome shows a \"disable developer mode extensions\" bubble at startup; just close it.",
             "Set up Chrome extension", MessageBoxButtons.OK, MessageBoxIcon.Information);
