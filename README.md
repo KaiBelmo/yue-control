@@ -1,8 +1,9 @@
 # Spotikey
 
-Spotify on your keys. Global keyboard shortcuts for the Spotify web player (open.spotify.com) in
-Chrome, plus a small now-playing popup with a clickable queue. Runs as a tray icon and works no matter
-which window has focus, so you never have to switch to the browser to skip, pause or check a song.
+Spotify on your keys. Global keyboard shortcuts for the Spotify, YouTube Music and YouTube web
+players (open.spotify.com, music.youtube.com, www.youtube.com) in Chrome, plus a small now-playing
+popup with a clickable queue. Runs as a tray icon and works no matter which window has focus, so you
+never have to switch to the browser to skip, pause or check a song.
 
 ![Spotikey now-playing popup with the queue](docs/poc.png)
 
@@ -25,15 +26,18 @@ otherwise jumps to the previous one.
 
 Two layers:
 
-1. **Windows media session (no extension).** Chrome publishes the Spotify tab to Windows as a media
+1. **Windows media session (no extension).** Chrome publishes the playing tab to Windows as a media
    session. The app sends next / previous / play-pause to it and reads title, artist, album and
-   artwork from it. Falls back to virtual media keys if no session exists.
-2. **Chrome extension (optional).** A tiny unpacked extension runs inside open.spotify.com and talks
-   to the tray app over a WebSocket on 127.0.0.1:47321. It reads the queue panel and clicks Spotify's
-   own shuffle / like / volume / repeat buttons. Without it, the popup shows only the current track and
-   the extension hotkeys show "Chrome extension not connected".
+   artwork from it. This covers Spotify, YouTube Music and YouTube alike. Falls back to virtual media
+   keys if no session exists.
+2. **Chrome extension (optional).** Tiny unpacked content scripts run inside open.spotify.com,
+   music.youtube.com and www.youtube.com and talk to the tray app over a WebSocket on
+   127.0.0.1:47321. They read the queue/playlist panel and click the site's own shuffle / like /
+   volume / repeat buttons. Without it, the popup shows only the current track and the extension
+   hotkeys show "Chrome extension not connected".
 
-No Spotify login, no Web API, no Premium needed.
+No Spotify login, no Web API, no Premium needed. When several sites are open the extension follows
+the tab that is actually making sound.
 
 ## Build and install
 
@@ -53,13 +57,13 @@ so it starts with Windows, and launches it. Use `-NoAutostart` or `-NoRun` to sk
 2. Turn on **Developer mode** (top right)
 3. Click **Load unpacked** and pick `%LOCALAPPDATA%\Spotikey\extension`
    (tray menu "Set up Chrome extension..." opens that folder and copies the path)
-4. Reload the open.spotify.com tab
+4. Reload the open.spotify.com, music.youtube.com and www.youtube.com tabs
 
 The tray menu then shows "Chrome extension: connected". Chrome shows a "disable developer mode
 extensions" bubble at startup for unpacked extensions; close it.
 
 **After every rebuild** that touches the `extension` folder: open `chrome://extensions`, click the
-reload arrow on "Spotikey Bridge", then reload the open.spotify.com tab. Chrome does not pick up
+reload arrow on "Spotikey Bridge", then reload the music tabs. Chrome does not pick up
 changed files on its own; a stale content script answers "Unknown action ..." in the popup.
 
 **Clickable queue.** Click a row in the popup to jump to that song. The popup stays open while the
@@ -85,8 +89,9 @@ Other settings in the same file: `PopupSeconds`, `ShowPopupOnAction`, `QueueRows
 - **"Chrome extension not connected"**: extension not loaded, Chrome not running, or the service worker
   is asleep. It reconnects within 30 seconds; opening `chrome://extensions` and clicking the extension's
   "service worker" link wakes it immediately.
-- **Shuffle / like / volume do nothing**: Spotify changed its page structure. The selectors live in
-  `extension/content.js` (`SEL` at the top) and are based on `data-testid` attributes.
+- **Shuffle / like / volume do nothing**: the site changed its page structure. Selectors live in
+  `extension/content.js` (Spotify), `extension/ytmusic.js` (YouTube Music) and `extension/youtube.js`
+  (YouTube). Note YouTube's like button needs a signed-in Google account.
 - **Port in use**: change `BridgePort` in config.json and `PORT` in `extension/background.js`, then
   reload both.
 
