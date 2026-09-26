@@ -12,9 +12,10 @@ public sealed record PopupExtras(
     string? Shuffle,
     IReadOnlyList<QueueItem> Queue,
     string? QueueSource,
-    bool QueueRequested)
+    bool QueueRequested,
+    string? Site)
 {
-    public static readonly PopupExtras None = new(false, null, null, null, Array.Empty<QueueItem>(), null, false);
+    public static readonly PopupExtras None = new(false, null, null, null, Array.Empty<QueueItem>(), null, false, null);
 }
 
 /// <summary>
@@ -55,6 +56,7 @@ public sealed class NowPlayingPopup : Form
     static readonly Color Background = Color.FromArgb(24, 24, 24);
     static readonly Color Border = Color.FromArgb(64, 64, 64);
     static readonly Color SpotifyGreen = Color.FromArgb(30, 215, 96);
+    static readonly Color YouTubeRed = Color.FromArgb(255, 0, 0);
     static readonly Color Dim = Color.FromArgb(150, 150, 150);
     static readonly Color RowText = Color.FromArgb(215, 215, 215);
     static readonly Color RowHover = Color.FromArgb(44, 44, 44);
@@ -277,7 +279,9 @@ public sealed class NowPlayingPopup : Form
         if (oldArt != null && !ReferenceEquals(oldArt, _art.Image)) oldArt.Dispose();
 
         _status.Text = BuildStatus(info, extras);
-        _status.ForeColor = extras.Message != null && !extras.BridgeConnected ? Color.FromArgb(255, 170, 80) : SpotifyGreen;
+        _status.ForeColor = extras.Message != null && !extras.BridgeConnected
+            ? Color.FromArgb(255, 170, 80)
+            : IsYouTube(extras.Site) ? YouTubeRed : SpotifyGreen;
 
         // Queue rows
         _queue = extras.Queue;
@@ -331,6 +335,8 @@ public sealed class NowPlayingPopup : Form
         _hideTimer.Interval = Math.Max(500, (int)(seconds * 1000));
         _hideTimer.Start();
     }
+
+    static bool IsYouTube(string? site) => site is "youtube" or "ytmusic";
 
     static string BuildStatus(NowPlayingInfo? info, PopupExtras extras)
     {
