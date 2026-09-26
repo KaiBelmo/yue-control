@@ -57,6 +57,7 @@ public sealed class NowPlayingPopup : Form
     static readonly Color Border = Color.FromArgb(64, 64, 64);
     static readonly Color SpotifyGreen = Color.FromArgb(30, 215, 96);
     static readonly Color YouTubeRed = Color.FromArgb(255, 0, 0);
+    static readonly Color SoundCloudOrange = Color.FromArgb(255, 85, 0);
     static readonly Color Dim = Color.FromArgb(150, 150, 150);
     static readonly Color RowText = Color.FromArgb(215, 215, 215);
     static readonly Color RowHover = Color.FromArgb(44, 44, 44);
@@ -281,7 +282,7 @@ public sealed class NowPlayingPopup : Form
         _status.Text = BuildStatus(info, extras);
         _status.ForeColor = extras.Message != null && !extras.BridgeConnected
             ? Color.FromArgb(255, 170, 80)
-            : IsYouTube(extras.Site) ? YouTubeRed : SpotifyGreen;
+            : StatusColor(extras.Site);
 
         // Queue rows
         _queue = extras.Queue;
@@ -336,7 +337,12 @@ public sealed class NowPlayingPopup : Form
         _hideTimer.Start();
     }
 
-    static bool IsYouTube(string? site) => site is "youtube" or "ytmusic";
+    static Color StatusColor(string? site) => site switch
+    {
+        "youtube" or "ytmusic" => YouTubeRed,
+        "soundcloud" => SoundCloudOrange,
+        _ => SpotifyGreen,
+    };
 
     static string BuildStatus(NowPlayingInfo? info, PopupExtras extras)
     {
