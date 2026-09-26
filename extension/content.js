@@ -82,6 +82,7 @@
   function state(extra = {}) {
     return {
       type: 'state',
+      site: 'spotify',
       track: nowPlaying(),
       isPlaying: isPlaying(),
       shuffle: shuffleState(),
