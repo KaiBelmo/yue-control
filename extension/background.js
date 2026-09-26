@@ -1,9 +1,9 @@
 // yuecontrol bridge - service worker.
 // Keeps a WebSocket open to the tray app on 127.0.0.1 and relays commands to the music tab
-// (Spotify, YouTube Music or YouTube).
+// (Spotify, YouTube Music, YouTube or SoundCloud).
 
 const PORT = 47321;
-const SITES = ['https://open.spotify.com/*', 'https://music.youtube.com/*', 'https://www.youtube.com/*'];
+const SITES = ['https://open.spotify.com/*', 'https://music.youtube.com/*', 'https://www.youtube.com/*', 'https://soundcloud.com/*'];
 let ws = null;
 let retryTimer = null;
 
