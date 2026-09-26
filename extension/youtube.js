@@ -109,6 +109,7 @@
   function state(extra = {}) {
     return {
       type: 'state',
+      site: 'youtube',
       track: nowPlaying(),
       isPlaying: isPlaying(),
       shuffle: shuffleState(),
@@ -145,7 +146,7 @@
   }
 
   function readQueue(limit) {
-    return { items: upcoming().map(({ title, artist, artUrl }) => ({ title, artist, artUrl })).slice(0, limit), source: 'Up next' };
+    return { items: upcoming().map(({ title, artist, artUrl }) => ({ title, artist, artUrl })).slice(0, limit), source: '' };
   }
 
   async function playQueueItem(index, title, artist) {
