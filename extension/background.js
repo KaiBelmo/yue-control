@@ -1,7 +1,9 @@
 // Spotikey Bridge - service worker.
-// Keeps a WebSocket open to the tray app on 127.0.0.1 and relays commands to the Spotify tab.
+// Keeps a WebSocket open to the tray app on 127.0.0.1 and relays commands to the music tab
+// (Spotify, YouTube Music or YouTube).
 
 const PORT = 47321;
+const SITES = ['https://open.spotify.com/*', 'https://music.youtube.com/*', 'https://www.youtube.com/*'];
 let ws = null;
 let retryTimer = null;
 
@@ -40,21 +42,23 @@ function send(obj) {
   if (ws && ws.readyState === WebSocket.OPEN) ws.send(JSON.stringify(obj));
 }
 
-async function findSpotifyTab() {
-  const tabs = await chrome.tabs.query({ url: 'https://open.spotify.com/*' });
+// The tab that is actually making noise wins, so the hotkeys follow whatever you are
+// listening to when both sites are open.
+async function findMusicTab() {
+  const tabs = await chrome.tabs.query({ url: SITES });
   if (!tabs.length) return null;
   return tabs.find(t => t.audible) || tabs.find(t => t.active) || tabs[0];
 }
 
 async function runCommand(msg) {
-  const tab = await findSpotifyTab();
-  if (!tab) return { ok: false, error: 'No open.spotify.com tab is open' };
+  const tab = await findMusicTab();
+  if (!tab) return { ok: false, error: 'No open.spotify.com or music.youtube.com tab is open' };
   try {
     const res = await chrome.tabs.sendMessage(tab.id, msg);
-    if (!res) return { ok: false, error: 'No answer from the Spotify tab (reload it)' };
+    if (!res) return { ok: false, error: 'No answer from the music tab (reload it)' };
     return { ok: !res.error, ...res };
   } catch (e) {
-    return { ok: false, error: 'Spotify tab did not answer - reload the tab after installing the extension' };
+    return { ok: false, error: 'The music tab did not answer - reload it after installing the extension' };
   }
 }
 
