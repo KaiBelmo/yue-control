@@ -11,7 +11,7 @@ public sealed class Config
     public string PlayPause { get; set; } = "Ctrl+Alt+Down";
     public string NowPlaying { get; set; } = "Ctrl+Alt+Up";
 
-    // Need the Chrome extension (they click buttons inside open.spotify.com). Empty = unbound.
+    // Need the Chrome extension (they click buttons inside Spotify / YouTube Music). Empty = unbound.
     public string Shuffle { get; set; } = "Ctrl+Alt+S";
     public string Like { get; set; } = "Ctrl+Alt+L";
     public string VolumeUp { get; set; } = "Ctrl+Alt+PageUp";
@@ -27,7 +27,7 @@ public sealed class Config
     /// <summary>How many upcoming tracks to list in the popup (needs the extension).</summary>
     public int QueueRows { get; set; } = 5;
 
-    /// <summary>Spotify volume change per hotkey press, 0.1 = 10%.</summary>
+    /// <summary>Music volume change per hotkey press, 0.1 = 10%.</summary>
     public double VolumeStep { get; set; } = 0.1;
 
     /// <summary>Localhost port the Chrome extension connects to. Must match extension/background.js.</summary>
