@@ -1,12 +1,12 @@
-// Spotikey Bridge - runs inside soundcloud.com.
+// yuecontrol bridge - runs inside soundcloud.com.
 // SoundCloud's web player renders no <audio> element (Web Audio) and ignores synthetic clicks for
 // some controls, so: shuffle/repeat/like are driven through their buttons, the set's track list is
 // used as the queue (items expose .trackItem.active for the current sound), and a queue row is played
 // by first firing mouseover to reveal its play button, then clicking it. Volume is not exposed in a
 // way a content script can drive, so the volume hotkeys report that.
 (() => {
-  if (window.__spotikeyBridge) return;
-  window.__spotikeyBridge = true;
+  if (window.__yuecontrolBridge) return;
+  window.__yuecontrolBridge = true;
 
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
