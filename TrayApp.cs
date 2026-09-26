@@ -338,7 +338,7 @@ public sealed class TrayApp : ApplicationContext
 
         message ??= Str(r, "error") ?? (q != null ? Str(q, "error") : null);
 
-        return new PopupExtras(connected, message, liked, shuffle, queue, q != null ? Str(q, "source") : null, queueRequested);
+        return new PopupExtras(connected, message, liked, shuffle, queue, q != null ? Str(q, "source") : null, queueRequested, Str(r, "site"));
     }
 
     static string? Str(JsonObject o, string key) =>
