@@ -1,8 +1,8 @@
 using System.Text.Json;
 
-namespace Spotikey;
+namespace YueControl;
 
-/// <summary>User settings, stored as JSON in %LOCALAPPDATA%\Spotikey\config.json.</summary>
+/// <summary>User settings, stored as JSON in %LOCALAPPDATA%\yuecontrol\config.json.</summary>
 public sealed class Config
 {
     // Work through Windows media sessions - no extension needed.
@@ -34,7 +34,7 @@ public sealed class Config
     public int BridgePort { get; set; } = 47321;
 
     public static string Dir =>
-        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Spotikey");
+        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "yuecontrol");
 
     public static string FilePath => Path.Combine(Dir, "config.json");
 
@@ -57,7 +57,7 @@ public sealed class Config
         catch (Exception ex)
         {
             MessageBox.Show($"Could not read {FilePath}, using default hotkeys.\n\n{ex.Message}",
-                "Spotikey", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                "yuecontrol", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         // Write back so newly added settings show up in the file.

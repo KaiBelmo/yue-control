@@ -1,9 +1,9 @@
-// Spotikey Bridge - runs inside open.spotify.com.
+// yuecontrol bridge - runs inside open.spotify.com.
 // Reads the player UI and clicks Spotify's own buttons on behalf of the tray app.
 // Selectors are based on Spotify's data-testid attributes (stable across redesigns so far).
 (() => {
-  if (window.__spotikeyBridge) return;
-  window.__spotikeyBridge = true;
+  if (window.__yuecontrolBridge) return;
+  window.__yuecontrolBridge = true;
 
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));

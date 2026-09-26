@@ -1,4 +1,4 @@
-// Spotikey Bridge - service worker.
+// yuecontrol bridge - service worker.
 // Keeps a WebSocket open to the tray app on 127.0.0.1 and relays commands to the music tab
 // (Spotify, YouTube Music or YouTube).
 

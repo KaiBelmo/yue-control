@@ -2,13 +2,13 @@ using System.Diagnostics;
 using System.Text.Json.Nodes;
 using Microsoft.Win32;
 
-namespace Spotikey;
+namespace YueControl;
 
 /// <summary>Tray icon, menu, hotkey wiring, extension bridge and autostart. Lives for the whole process.</summary>
 public sealed class TrayApp : ApplicationContext
 {
     const string RunKeyPath = @"Software\Microsoft\Windows\CurrentVersion\Run";
-    const string RunValueName = "Spotikey";
+    const string RunValueName = "yuecontrol";
     static readonly TimeSpan BridgeTimeout = TimeSpan.FromSeconds(3);
 
     Config _cfg;
@@ -60,7 +60,7 @@ public sealed class TrayApp : ApplicationContext
         _tray = new NotifyIcon
         {
             Icon = CreateTrayIcon(),
-            Text = "Spotikey",
+            Text = "yuecontrol",
             Visible = true,
             ContextMenuStrip = BuildMenu(),
         };
@@ -217,7 +217,7 @@ public sealed class TrayApp : ApplicationContext
         }
         catch (Exception ex)
         {
-            _tray.ShowBalloonTip(4000, "Spotikey", ex.Message, ToolTipIcon.Error);
+            _tray.ShowBalloonTip(4000, "yuecontrol", ex.Message, ToolTipIcon.Error);
         }
     }
 
@@ -310,7 +310,7 @@ public sealed class TrayApp : ApplicationContext
         }
         catch (Exception ex)
         {
-            _tray.ShowBalloonTip(4000, "Spotikey", ex.Message, ToolTipIcon.Error);
+            _tray.ShowBalloonTip(4000, "yuecontrol", ex.Message, ToolTipIcon.Error);
         }
         finally
         {
@@ -379,7 +379,7 @@ public sealed class TrayApp : ApplicationContext
         }
         catch (Exception ex)
         {
-            MessageBox.Show(ex.Message, "Spotikey", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(ex.Message, "yuecontrol", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 
@@ -397,7 +397,7 @@ public sealed class TrayApp : ApplicationContext
         _tray.ContextMenuStrip = BuildMenu();
 
         if (_hotkeys.Errors.Count == 0)
-            _tray.ShowBalloonTip(3000, "Spotikey", "Hotkeys reloaded.", ToolTipIcon.Info);
+            _tray.ShowBalloonTip(3000, "yuecontrol", "Hotkeys reloaded.", ToolTipIcon.Info);
         else
             ReportHotkeyErrors();
     }
@@ -423,7 +423,7 @@ public sealed class TrayApp : ApplicationContext
         }
         catch (Exception ex)
         {
-            MessageBox.Show("Could not change autostart: " + ex.Message, "Spotikey", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show("Could not change autostart: " + ex.Message, "yuecontrol", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 

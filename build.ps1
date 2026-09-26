@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-  Builds Spotikey as a single .exe, installs it to %LOCALAPPDATA%\Spotikey,
+  Builds yuecontrol as a single .exe, installs it to %LOCALAPPDATA%\yuecontrol,
   registers it to start with Windows and launches it.
 
 .PARAMETER NoAutostart
@@ -22,27 +22,30 @@ if (-not (Test-Path $dotnet)) { $dotnet = 'dotnet' }
 
 $root = $PSScriptRoot
 $publishDir = Join-Path $root 'publish'
-$installDir = Join-Path $env:LOCALAPPDATA 'Spotikey'
-$exe = Join-Path $installDir 'Spotikey.exe'
+$installDir = Join-Path $env:LOCALAPPDATA 'yuecontrol'
+$exe = Join-Path $installDir 'yuecontrol.exe'
 
 Write-Host "Publishing..." -ForegroundColor Cyan
-& $dotnet publish (Join-Path $root 'Spotikey.csproj') -c Release -o $publishDir --nologo
+& $dotnet publish (Join-Path $root 'yuecontrol.csproj') -c Release -o $publishDir --nologo
 if ($LASTEXITCODE -ne 0) { throw "dotnet publish failed with exit code $LASTEXITCODE" }
 
 Write-Host "Installing to $installDir" -ForegroundColor Cyan
 New-Item -ItemType Directory -Force $installDir | Out-Null
 
-# One-time migration from the old "SpotifyHotkeys" install: stop it, keep its config, drop its autostart.
-$oldDir = Join-Path $env:LOCALAPPDATA 'SpotifyHotkeys'
-$old = Get-Process SpotifyHotkeys -ErrorAction SilentlyContinue
-if ($old) { $old | Stop-Process -Force; $old | Wait-Process -Timeout 10 -ErrorAction SilentlyContinue }
-if ((Test-Path (Join-Path $oldDir 'config.json')) -and -not (Test-Path (Join-Path $installDir 'config.json'))) {
-    Copy-Item (Join-Path $oldDir 'config.json') $installDir
+# One-time migration from older names ("SpotifyHotkeys", then "Spotikey"): stop them, keep the newest
+# config, drop their autostart entry and install folder.
+foreach ($oldName in @('Spotikey', 'SpotifyHotkeys')) {
+    $oldDir = Join-Path $env:LOCALAPPDATA $oldName
+    $old = Get-Process $oldName -ErrorAction SilentlyContinue
+    if ($old) { $old | Stop-Process -Force; $old | Wait-Process -Timeout 10 -ErrorAction SilentlyContinue }
+    if ((Test-Path (Join-Path $oldDir 'config.json')) -and -not (Test-Path (Join-Path $installDir 'config.json'))) {
+        Copy-Item (Join-Path $oldDir 'config.json') $installDir
+    }
+    Remove-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Run' -Name $oldName -ErrorAction SilentlyContinue
+    if (Test-Path $oldDir) { Remove-Item $oldDir -Recurse -Force -ErrorAction SilentlyContinue }
 }
-Remove-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Run' -Name 'SpotifyHotkeys' -ErrorAction SilentlyContinue
-if (Test-Path $oldDir) { Remove-Item $oldDir -Recurse -Force -ErrorAction SilentlyContinue }
 
-$running = Get-Process Spotikey -ErrorAction SilentlyContinue
+$running = Get-Process yuecontrol -ErrorAction SilentlyContinue
 if ($running) {
     $running | Stop-Process -Force
     $running | Wait-Process -Timeout 10 -ErrorAction SilentlyContinue
@@ -52,7 +55,7 @@ if ($running) {
 $copied = $false
 for ($i = 0; $i -lt 20 -and -not $copied; $i++) {
     try {
-        Copy-Item (Join-Path $publishDir 'Spotikey.exe') $exe -Force -ErrorAction Stop
+        Copy-Item (Join-Path $publishDir 'yuecontrol.exe') $exe -Force -ErrorAction Stop
         $copied = $true
     } catch {
         Start-Sleep -Milliseconds 500
@@ -69,7 +72,7 @@ if (-not $NoAutostart) {
     Write-Host "Registering autostart (HKCU\...\Run)" -ForegroundColor Cyan
     $runKey = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Run'
     if (-not (Test-Path $runKey)) { New-Item -Path $runKey -Force | Out-Null }
-    Set-ItemProperty -Path $runKey -Name 'Spotikey' -Value "`"$exe`""
+    Set-ItemProperty -Path $runKey -Name 'yuecontrol' -Value "`"$exe`""
 }
 
 if (-not $NoRun) {

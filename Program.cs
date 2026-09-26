@@ -1,15 +1,15 @@
-namespace Spotikey;
+namespace YueControl;
 
 static class Program
 {
     [STAThread]
     static void Main()
     {
-        using var mutex = new Mutex(true, @"Local\Spotikey.SingleInstance", out bool isFirstInstance);
+        using var mutex = new Mutex(true, @"Local\yuecontrol.SingleInstance", out bool isFirstInstance);
         if (!isFirstInstance)
         {
-            MessageBox.Show("Spotikey is already running. Look for the green icon in the tray.",
-                "Spotikey", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("yuecontrol is already running. Look for the green icon in the tray.",
+                "yuecontrol", MessageBoxButtons.OK, MessageBoxIcon.Information);
             return;
         }
 

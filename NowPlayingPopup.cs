@@ -1,6 +1,6 @@
 using System.Drawing.Drawing2D;
 
-namespace Spotikey;
+namespace YueControl;
 
 public sealed record QueueItem(string Title, string Artist);
 

@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Spotikey Bridge",
+  "name": "yuecontrol bridge",
   "version": "1.2.0",
-  "description": "Connects Spotify, YouTube Music and YouTube to the Spotikey tray app: queue, shuffle, like and volume over localhost.",
+  "description": "Connects Spotify, YouTube Music and YouTube to the yuecontrol tray app: queue, shuffle, like and volume over localhost.",
   "permissions": ["alarms"],
   "host_permissions": [
     "https://open.spotify.com/*",

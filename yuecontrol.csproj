@@ -7,8 +7,8 @@
     <UseWindowsForms>true</UseWindowsForms>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>Spotikey</RootNamespace>
-    <AssemblyName>Spotikey</AssemblyName>
+    <RootNamespace>YueControl</RootNamespace>
+    <AssemblyName>yuecontrol</AssemblyName>
     <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
     <Version>1.0.0</Version>
 

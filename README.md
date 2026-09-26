@@ -1,11 +1,11 @@
-# Spotikey
+# 乐
 
-Spotify on your keys. Global keyboard shortcuts for the Spotify, YouTube Music and YouTube web
+Music on your keys. Global keyboard shortcuts for the Spotify, YouTube Music and YouTube web
 players (open.spotify.com, music.youtube.com, www.youtube.com) in Chrome, plus a small now-playing
 popup with a clickable queue. Runs as a tray icon and works no matter which window has focus, so you
 never have to switch to the browser to skip, pause or check a song.
 
-![Spotikey now-playing popup with the queue](docs/poc.png)
+![yuecontrol now-playing popup with the queue](docs/poc.png)
 
 | Action                          | Default hotkey     | Needs extension |
 |---------------------------------|--------------------|-----------------|
@@ -47,15 +47,15 @@ Requires the .NET 8 SDK (the script looks in `%LOCALAPPDATA%\Microsoft\dotnet` f
 .\build.ps1
 ```
 
-This publishes a single `Spotikey.exe`, copies it and the `extension` folder to
-`%LOCALAPPDATA%\Spotikey`, registers it under `HKCU\Software\Microsoft\Windows\CurrentVersion\Run`
+This publishes a single `yuecontrol.exe`, copies it and the `extension` folder to
+`%LOCALAPPDATA%\yuecontrol`, registers it under `HKCU\Software\Microsoft\Windows\CurrentVersion\Run`
 so it starts with Windows, and launches it. Use `-NoAutostart` or `-NoRun` to skip those steps.
 
 ## Installing the Chrome extension
 
 1. Open `chrome://extensions`
 2. Turn on **Developer mode** (top right)
-3. Click **Load unpacked** and pick `%LOCALAPPDATA%\Spotikey\extension`
+3. Click **Load unpacked** and pick `%LOCALAPPDATA%\yuecontrol\extension`
    (tray menu "Set up Chrome extension..." opens that folder and copies the path)
 4. Reload the open.spotify.com, music.youtube.com and www.youtube.com tabs
 
@@ -63,7 +63,7 @@ The tray menu then shows "Chrome extension: connected". Chrome shows a "disable 
 extensions" bubble at startup for unpacked extensions; close it.
 
 **After every rebuild** that touches the `extension` folder: open `chrome://extensions`, click the
-reload arrow on "Spotikey Bridge", then reload the music tabs. Chrome does not pick up
+reload arrow on "yuecontrol bridge", then reload the music tabs. Chrome does not pick up
 changed files on its own; a stale content script answers "Unknown action ..." in the popup.
 
 **Clickable queue.** Click a row in the popup to jump to that song. The popup stays open while the
@@ -98,4 +98,4 @@ Other settings in the same file: `PopupSeconds`, `ShowPopupOnAction`, `QueueRows
 ## Uninstall
 
 Right-click the tray icon, untick "Start with Windows", then Exit and delete
-`%LOCALAPPDATA%\Spotikey`. Remove the extension from `chrome://extensions`.
+`%LOCALAPPDATA%\yuecontrol`. Remove the extension from `chrome://extensions`.

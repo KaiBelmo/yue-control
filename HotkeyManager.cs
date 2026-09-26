@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace Spotikey;
+namespace YueControl;
 
 public enum HotkeyAction { Next, Previous, PlayPause, NowPlaying, Shuffle, Like, VolumeUp, VolumeDown, Repeat }
 

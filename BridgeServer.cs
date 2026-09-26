@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json.Nodes;
 
-namespace Spotikey;
+namespace YueControl;
 
 /// <summary>
 /// Tiny WebSocket server on 127.0.0.1 that the Chrome extension connects to. Built on a raw

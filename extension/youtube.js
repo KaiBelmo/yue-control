@@ -1,10 +1,10 @@
-// Spotikey Bridge - runs inside www.youtube.com (regular YouTube, incl. watch pages with a playlist).
+// yuecontrol bridge - runs inside www.youtube.com (regular YouTube, incl. watch pages with a playlist).
 // The player is the standard YouTube player: #movie_player exposes get/setVolume and getLoopVideo;
 // the "Shuffle playlist" and "Loop playlist" buttons carry their state in aria-label/aria-pressed.
 // Track title/artist/artwork come from the Media Session metadata the player publishes.
 (() => {
-  if (window.__spotikeyBridge) return;
-  window.__spotikeyBridge = true;
+  if (window.__yuecontrolBridge) return;
+  window.__yuecontrolBridge = true;
 
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));

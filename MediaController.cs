@@ -1,7 +1,7 @@
 using System.Runtime.InteropServices;
 using Windows.Media.Control;
 
-namespace Spotikey;
+namespace YueControl;
 
 public sealed record NowPlayingInfo(string Title, string Artist, string Album, string Status, Image? Art, string SourceApp);
 

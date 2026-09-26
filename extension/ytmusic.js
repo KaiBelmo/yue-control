@@ -1,11 +1,11 @@
-// Spotikey Bridge - runs inside music.youtube.com.
+// yuecontrol bridge - runs inside music.youtube.com.
 // YouTube Music is a Polymer app whose player bar exposes its state as element properties
 // (shuffleOn, repeatMode, likeButtonRenderer...) and ignores bare element.click(); its buttons want
 // a full pointer sequence. So we drive the bar's own API where one exists and press buttons
 // otherwise. The queue is already rendered in the DOM, so no panel open/close flicker.
 (() => {
-  if (window.__spotikeyBridge) return;
-  window.__spotikeyBridge = true;
+  if (window.__yuecontrolBridge) return;
+  window.__yuecontrolBridge = true;
 
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
