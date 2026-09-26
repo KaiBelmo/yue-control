@@ -264,7 +264,7 @@ public sealed class NowPlayingPopup : Form
         if (info == null)
         {
             _title.Text = "Nothing is playing";
-            _artist.Text = "Open open.spotify.com and start a song";
+            _artist.Text = "Open Spotify or YouTube Music and start a song";
             _art.Image = null;
         }
         else
